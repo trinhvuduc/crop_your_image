@@ -41,6 +41,9 @@ class CropController {
 
   /// request redo
   void redo() => _delegate.onRedo();
+
+  /// change [scale]
+  set scale(double value) => _delegate.onChangeScale(value);
 }
 
 /// Delegate of actions from [CropController]
@@ -69,4 +72,7 @@ class CropControllerDelegate {
 
   /// callback that [CropController.redo] is called.
   late VoidCallback onRedo;
+
+  /// callback that [CropController.scale] is changed.
+  late ValueChanged<double> onChangeScale;
 }

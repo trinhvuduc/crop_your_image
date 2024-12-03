@@ -337,7 +337,10 @@ class _CropEditorState extends State<_CropEditor> {
         _resizeWithArea(newArea);
       }
       ..onUndo = _undo
-      ..onRedo = _redo;
+      ..onRedo = _redo
+      ..onChangeScale = (scale) {
+        _applyScale(scale);
+      };
 
     // prepare for history state
     _historyState = HistoryState(onHistoryChanged: widget.onHistoryChanged);
