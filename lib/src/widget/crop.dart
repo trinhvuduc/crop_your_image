@@ -129,6 +129,11 @@ class Crop extends StatelessWidget {
   /// [false] by default.
   final bool fixCropRect;
 
+  /// If set, the image will start scaled from the center by this amount.
+  /// Set double value >= 1.0
+  /// 1.0 by default.
+  final double initialZoom;
+
   /// Function called before scaling image.
   /// Note that this function is called multiple times during user tries to scale image.
   /// If this function returns [false], scaling is canceled.
@@ -175,6 +180,7 @@ class Crop extends StatelessWidget {
     this.progressIndicator = const SizedBox.shrink(),
     this.interactive = false,
     this.interactiveCrop = false,
+    this.initialZoom = 1.0,
     this.willUpdateScale,
     this.onHistoryChanged,
     FormatDetector? formatDetector,
@@ -215,6 +221,7 @@ class Crop extends StatelessWidget {
             progressIndicator: progressIndicator,
             interactive: interactive,
             interactiveCrop: interactiveCrop,
+            initialZoom: initialZoom,
             willUpdateScale: willUpdateScale,
             onHistoryChanged: onHistoryChanged,
             scrollZoomSensitivity: scrollZoomSensitivity,
@@ -249,6 +256,7 @@ class _CropEditor extends StatefulWidget {
   final Widget progressIndicator;
   final bool interactive;
   final bool interactiveCrop;
+  final double? initialZoom;
   final WillUpdateScale? willUpdateScale;
   final HistoryChangedCallback? onHistoryChanged;
   final ImageCropper imageCropper;
@@ -278,6 +286,7 @@ class _CropEditor extends StatefulWidget {
     required this.progressIndicator,
     required this.interactive,
     required this.interactiveCrop,
+    this.initialZoom,
     required this.willUpdateScale,
     required this.onHistoryChanged,
     required this.imageCropper,
@@ -494,7 +503,8 @@ class _CropEditorState extends State<_CropEditor> {
     }
 
     if (widget.interactive) {
-      _applyScale(_readyState.scaleToCover);
+      final initialScale = _readyState.scaleToCover * (widget.initialZoom ?? 1);
+      _applyScale(initialScale);
     }
   }
 
