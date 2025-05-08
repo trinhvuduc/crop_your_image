@@ -44,6 +44,9 @@ class CropController {
 
   /// change [scale]
   set scale(double value) => _delegate.onChangeScale(value);
+
+  /// reset image and crop rect
+  void reset() => _delegate.onReset();
 }
 
 /// Delegate of actions from [CropController]
@@ -75,4 +78,7 @@ class CropControllerDelegate {
 
   /// callback that [CropController.scale] is changed.
   late ValueChanged<double> onChangeScale;
+
+  /// callback that [CropController.reset] is called.
+  late VoidCallback onReset;
 }

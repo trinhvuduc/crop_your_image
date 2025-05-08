@@ -349,7 +349,12 @@ class _CropEditorState extends State<_CropEditor> {
       ..onRedo = _redo
       ..onChangeScale = (scale) {
         _applyScale(scale);
+      }
+      ..onReset = () {
+        _resetCropRect();
+        widget.onStatusChanged?.call(CropStatus.ready);
       };
+      
 
     // prepare for history state
     _historyState = HistoryState(onHistoryChanged: widget.onHistoryChanged);
